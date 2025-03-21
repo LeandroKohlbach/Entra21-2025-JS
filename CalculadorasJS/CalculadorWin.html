@@ -7,7 +7,6 @@
     <title>Calculadora</title>
     <link rel="stylesheet" href="StyleCalculadora.css">
 </head>
-</head>
 
 <body>
     <div class="DivGeral">
@@ -31,7 +30,7 @@
                 <button onclick="ValorNaTela('1')">1</button>
                 <button onclick="ValorNaTela('2')">2</button>
                 <button onclick="ValorNaTela('3')">3</button>
-                <button onclick="ValorNaTela('x')">X</button>
+                <button onclick="ValorNaTela('x')">x</button>
             </div>
             <div class="botoes">
                 <button onclick="ValorNaTela(',')">,</button>
@@ -40,18 +39,22 @@
                 <button onclick="ValorNaTela('/')">/</button>
             </div>
             <div class="BotoesMaiores">
-                <button onclick="calcula()">=</button><button onclick="limpa()">CE</button>
+                <button onclick="calcula()">=</button>
+                <button onclick="limpa()">CE</button>
             </div>
         </div>
     </div>
     <script>
-        function ValorNaTela(valor){
-            let display = document.getElementById('textoDeView')
-            display.innerHTML += valor
-
+        function ValorNaTela(valor) {
+            let display = document.getElementById('textoDeView');
+            if (display.innerHTML === 'Erro') {
+                display.innerHTML = '';
+            }
+            display.innerHTML += valor;
         }
-        function calcula(){
-            let display = document.getElementById('textoDeView')
+
+        function calcula() {
+            let display = document.getElementById('textoDeView');
             let expressao = display.innerHTML.replace(/x/g, '*');
             try {
                 display.innerHTML = eval(expressao);
@@ -59,9 +62,10 @@
                 display.innerHTML = 'Erro';
             }
         }
-        function limpa(){
-            let display = document.getElementById('textoDeView')
-            display.innerHTML = ''
+
+        function limpa() {
+            let display = document.getElementById('textoDeView');
+            display.innerHTML = '';
         }
     </script>
 </body>
