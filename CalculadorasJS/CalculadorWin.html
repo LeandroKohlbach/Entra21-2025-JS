@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="StyleCalculadora.css">
+</head>
+</head>
+
+<body>
+    <div class="DivGeral">
+        <div class="Displayview">
+            <p id="textoDeView"></p>
+        </div>
+        <div class="GridCalculadora">
+            <div class="botoes">
+                <button onclick="ValorNaTela('7')">7</button>
+                <button onclick="ValorNaTela('8')">8</button>
+                <button onclick="ValorNaTela('9')">9</button>
+                <button onclick="ValorNaTela('+')">+</button>
+            </div>
+            <div class="botoes">
+                <button onclick="ValorNaTela('4')">4</button>
+                <button onclick="ValorNaTela('5')">5</button>
+                <button onclick="ValorNaTela('6')">6</button>
+                <button onclick="ValorNaTela('-')">-</button>
+            </div>
+            <div class="botoes">
+                <button onclick="ValorNaTela('1')">1</button>
+                <button onclick="ValorNaTela('2')">2</button>
+                <button onclick="ValorNaTela('3')">3</button>
+                <button onclick="ValorNaTela('x')">X</button>
+            </div>
+            <div class="botoes">
+                <button onclick="ValorNaTela(',')">,</button>
+                <button onclick="ValorNaTela('0')">0</button>
+                <button onclick="ValorNaTela('.')">.</button>
+                <button onclick="ValorNaTela('/')">/</button>
+            </div>
+            <div class="BotoesMaiores">
+                <button onclick="calcula()">=</button><button onclick="limpa()">CE</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        function ValorNaTela(valor){
+            let display = document.getElementById('textoDeView')
+            display.innerHTML += valor
+
+        }
+        function calcula(){
+            let display = document.getElementById('textoDeView')
+            let expressao = display.innerHTML.replace(/x/g, '*');
+            try {
+                display.innerHTML = eval(expressao);
+            } catch (e) {
+                display.innerHTML = 'Erro';
+            }
+        }
+        function limpa(){
+            let display = document.getElementById('textoDeView')
+            display.innerHTML = ''
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,111 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+
+body {
+    height: 100vh;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: "Kanit", sans-serif;
+    background-image: linear-gradient(30deg,black, rgb(223, 226, 236),black);
+}
+
+.DivGeral {
+    border: 1px solid black;
+    display: grid;
+    position: relative;
+    width: 90%;
+    max-width: 400px;
+    height: 60%;
+    border-radius: 15px;
+    background-color: rgb(53, 56, 68);
+    padding: 10px;
+}
+
+.Displayview {
+    border-radius: 15px;
+    margin-top: 10px;
+    height: 90%;
+    width: 90%;
+    margin: auto;
+    background-color: rgb(233, 233, 233);
+    border: 1px solid black;
+    font-size: 30px;
+    text-align: right;
+}
+
+.GridCalculadora {
+    height: 100%;
+    width: 100%;
+}
+
+.GridCalculadora>.botoes {
+    margin: auto;
+    width: 95%;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.GridCalculadora>.botoes>button {
+    height: 75px;
+    width: 75px;
+    border: 1px solid dodgerblue;
+    border-radius: 15%;
+    font-size: 20px;
+    flex: 1 1 22%;
+    margin: 5px;
+}
+
+.botoes>button:hover {
+    background-color: dodgerblue;
+    color: white;
+}
+
+.GridCalculadora>.BotoesMaiores {
+    display: flex;
+    justify-content: space-around;
+}
+
+.GridCalculadora>.BotoesMaiores>button {
+    border-radius: 15px;
+    width: 40%;
+    font-size: 20px;
+    height: 75px;
+    border: 1px solid dodgerblue;
+}
+
+.BotoesMaiores>button:hover {
+    background-color: dodgerblue;
+    color: white;
+}
+#textoDeView{
+    margin-right: 5px;
+}
+
+/* Media queries para responsividade */
+@media (max-width: 600px) {
+    .DivGeral {
+        width: 100%;
+        height: auto;
+    }
+
+    .Displayview {
+        font-size: 20px;
+    }
+
+    .GridCalculadora>.botoes>button {
+        height: 50px;
+        width: 50px;
+        font-size: 16px;
+    }
+
+    .GridCalculadora>.BotoesMaiores>button {
+        height: 50px;
+        font-size: 16px;
+    }
+}
