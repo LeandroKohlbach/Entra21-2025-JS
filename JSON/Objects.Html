@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OBJCs</title>
+</head>
+<body>
+    <p></p>
+    <table>
+        <thead>
+             <th>Nome</th>
+            <th>Idade</th>
+             <th>Telefone</th>
+        </thead>
+        <tbody id="dados">
+
+        </tbody>
+    </table>
+    <hr>
+    <button onclick="listarEmTabela()">Carregar</button>
+    <script>
+       /* var contato = { nome:'Leandro', idade:17, telefone:'(11) 99999-9999' };
+        document.getElementsByTagName('p')[0].innerHTML= contato.idade;
+        */
+        var listasContatos = [
+            { nome:'Leandro', idade:17, telefone:'(11) 99999-9999' },
+            { nome:'LucasBoquete', idade:1, telefone:'(12) 91249-9999' },
+            { nome:'JulianoViado', idade:3, telefone:'(13) 99999-9999' },
+            { nome:'NathanChupapau', idade:15, telefone:'(14) 99999-9999' },
+            
+        ];
+        function listarEmTabela(){
+           // listasContatos.map(show(ct));
+            for (const element of listasContatos) {
+                show(element);
+                
+            }
+        }
+        function show(contato){
+            const linha=`<tr>
+            <td>${contato.nome}</td><td>${contato.idade}</td><td>${contato.telefone}</td>
+            </tr>`
+            document.getElementById('dados').innerHTML+=linha;
+
+        }
+
+
+
+    </script>
+</body>
+</html>

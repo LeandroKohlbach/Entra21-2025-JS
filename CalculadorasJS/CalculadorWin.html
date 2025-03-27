@@ -57,12 +57,39 @@
             let display = document.getElementById('textoDeView');
             let expressao = display.innerHTML.replace(/x/g, '*');
             try {
-                display.innerHTML = eval(expressao);
+                display.innerHTML = avaliarExpressao(expressao);
             } catch (e) {
                 display.innerHTML = 'Erro';
             }
         }
+        function avaliarExpressao(expressao) {
+            let tokens = expressao.split(/([+\-*/])/);
+            let resultado = parseFloat(tokens[0]);
 
+            for (let i = 1; i < tokens.length; i += 2) {
+                let operador = tokens[i];
+                let proximoNumero = parseFloat(tokens[i + 1]);
+
+                switch (operador) {
+                    case '+':
+                        resultado += proximoNumero;
+                        break;
+                    case '-':
+                        resultado -= proximoNumero;
+                        break;
+                    case '*':
+                        resultado *= proximoNumero;
+                        break;
+                    case '/':
+                        resultado /= proximoNumero;
+                        break;
+                    default:
+                        throw new Error('Operador inválido');
+                }
+            }
+
+            return resultado;
+        }
         function limpa() {
             let display = document.getElementById('textoDeView');
             display.innerHTML = '';
