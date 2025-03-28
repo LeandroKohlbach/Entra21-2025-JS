@@ -18,7 +18,7 @@
         <p>Informe seu telefone</p>
         <input type="text" id="telefone" placeholder="Digite o Telefone">
         <p>Informe seu CEP</p>
-        <input type="text" id="cep" placeholder="Digite o cep" oninput="loadLogradouro()">
+        <input type="text" id="cep" placeholder="Digite o cep" onblur="loadLogradouro()">
         <div class="dados">
             <p id="rua"></p>
             <p id="bairro"></p>
@@ -27,23 +27,56 @@
                 <label id="estado"></label>
             </div>
         </div>
+        <input type="checkbox" onname="" id="">
         <button onclick="Cadastro()">Cadastrar</button>
     </div>
     <script>
         function loadLogradouro() {
+            debugger
             const cep = document.getElementById('cep').value
-            fetch(`https://viacep.com.br/ws/${cep}/json/`).then(data => data.json()).then(dados => preencher(dados))
+            fetch(`https://viacep.com.br/ws/${cep}/json/`)
+                .then(response => response.json())
+                .then(dados => {
+                    if (dados.erro) {
+                        alert(`Seu cep não existe`)
+                    } else {
+                        preencher(dados);
+                    }
+                }
+                )
+                .catch(error => {
+                    console.error('Erro:', error);
+                });
+
         }
         function preencher(dados) {
             document.getElementById('rua').innerHTML = `Rua: ${dados.logradouro}`
-            document.getElementById('bairro').innerHTML =`Bairro: ${dados.bairro}`
-            document.getElementById('cidade').innerHTML =`Cidade: ${dados.localidade}`
-            document.getElementById('estado').innerHTML = `Estado: ${dados.uf}` 
+            document.getElementById('bairro').innerHTML = `Bairro: ${dados.bairro}`
+            document.getElementById('cidade').innerHTML = `Cidade: ${dados.localidade}`
+            document.getElementById('estado').innerHTML = `Estado: ${dados.uf}`
         }
         function Cadastro() {
-            if (document.getElementById('nome').value == '' || document.getElementById('email').value == '' || document.getElementById('telefone').value == '' || document.getElementById('cep').value == '' || document.getElementById('rua').innerHTML == '' || document.getElementById('bairro').value == '' || document.getElementById('cidade').value == '' || document.getElementById('estado').value == '') {
-                alert('Preencha todos os campos')
+            if (document.getElementById('nome').value == '') {
+                alert('Preencha o campo de nome')
                 return
+            } else if (document.getElementById('email').value == '') {
+                alert('Preencha o campo de email')
+                return
+            } else if (document.getElementById('telefone').value == '') {
+                alert('Preencha o campo de telefone')
+                return
+            } else if (document.getElementById('cep').value == '') {
+                alert('Preencha o campo de cep')
+                return
+            } else if ((document.getElementById('cep').value).length != 8) {
+                alert('O campo cep deve conter 8 digitos')
+                return
+
+
+
+
+
+
             } else {
                 const objetoPessoa = {
                     nome: document.getElementById('nome').value,

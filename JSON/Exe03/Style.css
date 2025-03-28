@@ -107,15 +107,16 @@ button:hover{
         font-size: 15px;
     }
 }
-@media screen and (max-width: 400px){
+@media screen and (max-width: 450px){
     .divPrincipal{
         width: 80%;
+        height: 60%;
     }
     input{
         width: 80%;
     }
 body>p{
-        font-size: 12px;
+        font-size: 15px;
     }
     .divPrincipal>p{
         font-size: 15px;
@@ -124,10 +125,10 @@ body>p{
         width: 80%;
     }
     .dados>p{
-        font-size: 12px;
+        font-size: 15px;
     }
     .dados>div{
-        font-size: 12px;
+        font-size: 15px;
 }
     
 }
