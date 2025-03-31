@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Api de Storage</title>
+</head>
+<body>
+    <h2>LocalStorage</h2>
+    <label for="">Informe seu nome</label>
+    <input type="text" id="nome" placeholder="Digite o Nome">
+    <button onclick="gravar()">Gravar</button>
+    <a href="teste.html">Leitura</a>
+    <script>
+        function gravar() {
+            let nome = document.getElementById('nome')
+            var arrayconts= JSON.parse(localStorage.getItem('Contatos')) || [] 
+            if (nome == '') {
+                alert('Preencha o campo de nome')
+                nome.focus()
+            } else {
+                arrayconts.push(nome.value)
+                localStorage.setItem('Contatos', JSON.stringify(arrayconts))
+                nome.value = ''
+                alert('Gravado com sucesso')     
+                arrayconts.map(cntt=>console.log(cntt))           
+            }
+        }
+    </script>
+</body>
+</html>

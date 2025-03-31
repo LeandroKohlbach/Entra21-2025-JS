@@ -83,6 +83,31 @@ button:hover{
     background-color:  white;
     color: rgb(255, 37, 37);
 }
+#listar{
+    border: none;
+    border-radius: 15px;
+    width: 100px;
+    height: 30px;
+    background-color: rgb(255, 37, 37);
+    color: white;
+    font-size: 15px;
+    margin-top: 10px;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 0);
+    bottom: 5%;
+}
+#listar:hover{
+    background-color:  white;
+    color: rgb(255, 37, 37);
+}#listar>a{
+    text-decoration: none;
+    color: white;
+}
+#listar>a:hover{
+    text-decoration: none;
+    color: rgb(255, 37, 37);
+}
 @keyframes boxShadowFlutuante{
     0% {
         box-shadow: 10px 0px 15px 5px rgba(255, 0, 0, 0.8); 

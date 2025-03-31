@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Leitura do LocalStorage</h1>
+    <p id="conteudo"></p>
+    <hr>
+    <a href="index.html">Voltar</a>
+    
+    <script>
+        var arrayconts = JSON.parse(localStorage.getItem('Contatos')) || [];
+        arrayconts.forEach(cntt => {
+            document.getElementById('conteudo').innerHTML += `<p>${cntt}</p>`;
+        });
+    </script>
+</body>
+</html>

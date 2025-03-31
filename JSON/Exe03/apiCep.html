@@ -14,11 +14,11 @@
         <p>Informe seu nome:</p>
         <input type="text" id="nome" placeholder="Digite o Nome">
         <p>Informe seu email</p>
-        <input type="text" id="email" placeholder="Digite a Email">
+        <input type="text" id="email" placeholder="Digite o Email">
         <p>Informe seu telefone</p>
         <input type="text" id="telefone" placeholder="Digite o Telefone">
         <p>Informe seu CEP</p>
-        <input type="text" id="cep" placeholder="Digite o cep" onblur="loadLogradouro()">
+        <input type="text" id="cep" placeholder="Digite o CEP" onblur="loadLogradouro()">
         <div class="dados">
             <p id="rua"></p>
             <p id="bairro"></p>
@@ -27,80 +27,86 @@
                 <label id="estado"></label>
             </div>
         </div>
-        <input type="checkbox" onname="" id="">
         <button onclick="Cadastro()">Cadastrar</button>
+        <button id="listar"><a href="ListaApiCep.html">Consulta</a></button>
     </div>
     <script>
+        var ruaPessoa = '', bairroPessoa = '', cidadePessoa = '', estadoPessoa = '';
         function loadLogradouro() {
-            debugger
-            const cep = document.getElementById('cep').value
+            const cep = document.getElementById('cep').value;
             fetch(`https://viacep.com.br/ws/${cep}/json/`)
                 .then(response => response.json())
                 .then(dados => {
                     if (dados.erro) {
-                        alert(`Seu cep não existe`)
+                        alert('Seu CEP não existe');
                     } else {
                         preencher(dados);
+                        
                     }
-                }
-                )
+                })
                 .catch(error => {
                     console.error('Erro:', error);
                 });
-
         }
+
         function preencher(dados) {
-            document.getElementById('rua').innerHTML = `Rua: ${dados.logradouro}`
-            document.getElementById('bairro').innerHTML = `Bairro: ${dados.bairro}`
-            document.getElementById('cidade').innerHTML = `Cidade: ${dados.localidade}`
-            document.getElementById('estado').innerHTML = `Estado: ${dados.uf}`
+            document.getElementById('rua').innerHTML = dados.logradouro;
+            document.getElementById('bairro').innerHTML = dados.bairro;
+            document.getElementById('cidade').innerHTML = dados.localidade;
+            document.getElementById('estado').innerHTML = dados.uf;
+            ruaPessoa = dados.logradouro;
+            bairroPessoa = dados.bairro;
+            cidadePessoa = dados.localidade;
+            estadoPessoa = dados.estado;
+        
         }
+
         function Cadastro() {
-            if (document.getElementById('nome').value == '') {
-                alert('Preencha o campo de nome')
-                return
-            } else if (document.getElementById('email').value == '') {
-                alert('Preencha o campo de email')
-                return
-            } else if (document.getElementById('telefone').value == '') {
-                alert('Preencha o campo de telefone')
-                return
-            } else if (document.getElementById('cep').value == '') {
-                alert('Preencha o campo de cep')
-                return
-            } else if ((document.getElementById('cep').value).length != 8) {
-                alert('O campo cep deve conter 8 digitos')
-                return
-
-
-
-
-
-
+            if (document.getElementById('nome').value === '') {
+                alert('Preencha o campo de nome');
+                return;
+            } else if (document.getElementById('email').value === '') {
+                alert('Preencha o campo de email');
+                return;
+            } else if (document.getElementById('telefone').value === '') {
+                alert('Preencha o campo de telefone');
+                return;
+            } else if (document.getElementById('cep').value === '') {
+                alert('Preencha o campo de CEP');
+                return;
+            } else if (document.getElementById('cep').value.length !== 8) {
+                alert('O campo CEP deve conter 8 dígitos');
+                return;
             } else {
                 const objetoPessoa = {
                     nome: document.getElementById('nome').value,
                     email: document.getElementById('email').value,
                     telefone: document.getElementById('telefone').value,
                     cep: document.getElementById('cep').value,
-                    rua: document.getElementById('rua').innerHTML,
-                    bairro: document.getElementById('bairro').innerHTML,
-                    cidade: document.getElementById('cidade').innerHTML,
-                    estado: document.getElementById('estado').innerHTML
-                }
-                alert(`Olá ${objetoPessoa.nome}, o email ${objetoPessoa.email} e o telefone ${objetoPessoa.telefone} foram cadastrados com sucesso!`)
-                Limpar()
+                    rua: ruaPessoa,
+                    bairro: bairroPessoa,
+                    cidade: cidadePessoa,
+                    estado: estadoPessoa,               
+                };
+
+                let pessoas = JSON.parse(localStorage.getItem('Pessoas')) || [];
+                pessoas.push(objetoPessoa);
+                localStorage.setItem('Pessoas', JSON.stringify(pessoas));
+
+                alert(`Olá ${objetoPessoa.nome}, o email ${objetoPessoa.email} e o telefone ${objetoPessoa.telefone} foram cadastrados com sucesso!`);
+                Limpar();
             }
         }
+
         function Limpar() {
-            document.getElementById('nome').value = ''
-            document.getElementById('email').value = ''
-            document.getElementById('telefone').value = ''
-            document.getElementById('cep').value = ''
-            document.getElementById('rua').innerHTML = ''
-            document.getElementById('bairro').innerHTML = ''
-            document.getElementById('cidade').innerHTML = ''
-            document.getElementById('estado').innerHTML = ''
+            document.getElementById('nome').value = '';
+            document.getElementById('email').value = '';
+            document.getElementById('telefone').value = '';
+            document.getElementById('cep').value = '';
+            document.getElementById('rua').innerHTML = '';
+            document.getElementById('bairro').innerHTML = '';
+            document.getElementById('cidade').innerHTML = '';
+            document.getElementById('estado').innerHTML = '';
         }
     </script>
 </body>

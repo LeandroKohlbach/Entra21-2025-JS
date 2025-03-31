@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista Pessoas Cadastradas</title>
+    <link rel="stylesheet" href="StyleListagem.css">
+</head>
+<body>
+    <table>
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Email</th>
+                <th>Telefone</th>
+                <th>CEP</th>
+                <th>Rua</th>
+                <th>Bairro</th>
+                <th>Cidade</th>
+                <th>Estado</th>
+            </tr>
+        </thead>
+        <tbody>
+
+        </tbody>
+    </table>
+    <button id="pag"><a href="apiCep.html">Cadastro</a></button>
+    <script>
+        function listar() {
+
+            var DadosPessoa = JSON.parse(localStorage.getItem('Pessoas')) || [];
+            console.log(DadosPessoa);
+            for (const d of DadosPessoa) {
+                document.getElementsByTagName('tbody')[0].innerHTML += `
+                    <tr>
+                        <td>${d.nome}</td>
+                        <td>${d.email}</td>
+                        <td>${d.telefone}</td>
+                        <td>${d.cep}</td>
+                        <td>${d.rua}</td>
+                        <td>${d.bairro}</td>
+                        <td>${d.cidade}</td>
+                        <td>${d.estado}</td>
+                        <td><button onclick="deletar('${d.nome}')">Deletar</button></td>
+                    </tr>`;
+                
+            }
+           
+        }
+        function deletar(nome) {
+            var DadosPessoa = JSON.parse(localStorage.getItem('Pessoas')) || [];
+            var index = DadosPessoa.findIndex(p => p.nome === nome);
+            if (index !== -1) {
+                DadosPessoa.splice(index, 1);
+                localStorage.setItem('Pessoas', JSON.stringify(DadosPessoa));
+                listar();
+            }
+        }
+
+        window.onload = listar; 
+    </script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+body{
+    height: 100vh;
+    width: 100vw;
+    background-image: linear-gradient(45deg,  black, white, black);    
+    
+}
+table{
+    background-color: white;
+    border-radius: 10px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    font-size: 90%;
+
+
+}
+thead{
+    background-color: rgb(223, 86, 86);
+    color: white;
+    font-size: 20px;
+    text-align: center;
+    border: 2px solid black;
+    border-radius: 10px;
+}
+#pag{
+    border: none;
+    border-radius: 15px;
+    width: 100px;
+    height: 30px;
+    background-color: rgb(255, 37, 37);
+    color: white;
+    font-size: 15px;
+    margin-top: 10px;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 0);
+    bottom: 10%;
+}
+#pag:hover{
+    background-color:  white;
+    color: rgb(255, 37, 37);
+}
+#pag>a{
+    text-decoration: none;
+    color: white;
+}
+#pag>a:hover{
+    text-decoration: none;
+    color: rgb(255, 37, 37);
+}
