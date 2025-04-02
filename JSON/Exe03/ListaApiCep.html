@@ -1,16 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lista Pessoas Cadastradas</title>
     <link rel="stylesheet" href="StyleListagem.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 </head>
+
 <body>
+    <div id="alterar" style="display: none;">
+        <div id="titulo">
+            <h3>Alteração</h3>
+        </div>
+        <div id="DadosAlterar">
+            <input type="text" id="nome" placeholder="Digite o Nome">
+            <input type="text" id="email" placeholder="Digite o Email">
+            <input type="text" id="telefone" placeholder="Digite o Telefone">
+            <input type="text" id="cep" placeholder="Digite o CEP" onblur="loadLogradouro()">
+            <div class="dados">
+                <p id="rua"></p>
+                <p id="bairro"></p>
+                <div id="localidade">
+                    <label id="cidade"></label>
+                    <label id="estado"></label>
+                </div>
+            </div>
+        </div>
+        <div id="footer">
+            <button onclick="Salvar()" id="btnAlterar">Alterar</button>
+            <button onclick="document.getElementById('alterar').style.display = 'none'" id="btnFechar">Fechar</button>
+        </div>
+        
+    </div>
     <table>
         <thead>
             <tr>
-                <th>Nome</th>
+                <th id="Esquerda">Nome</th>
                 <th>Email</th>
                 <th>Telefone</th>
                 <th>CEP</th>
@@ -18,6 +45,7 @@
                 <th>Bairro</th>
                 <th>Cidade</th>
                 <th>Estado</th>
+                <th id="Direita">Ações</th>
             </tr>
         </thead>
         <tbody>
@@ -26,12 +54,15 @@
     </table>
     <button id="pag"><a href="apiCep.html">Cadastro</a></button>
     <script>
-        function listar() {
+        var condicao = true;
+        var tbody = document.getElementsByTagName('tbody')[0];
+        var pessoaAtual = null;
 
+        function listar() {
             var DadosPessoa = JSON.parse(localStorage.getItem('Pessoas')) || [];
-            console.log(DadosPessoa);
+            tbody.innerHTML = '';
             for (const d of DadosPessoa) {
-                document.getElementsByTagName('tbody')[0].innerHTML += `
+                tbody.innerHTML += `
                     <tr>
                         <td>${d.nome}</td>
                         <td>${d.email}</td>
@@ -41,23 +72,91 @@
                         <td>${d.bairro}</td>
                         <td>${d.cidade}</td>
                         <td>${d.estado}</td>
-                        <td><button onclick="deletar('${d.nome}')">Deletar</button></td>
+                        <td><button onclick="deletar('${d.nome}')" id="iconExcluir"><i class="bi bi-trash-fill"></i></button>
+                        <button onclick="alterar('${d.nome}')" id="iconAlterar"><i class="bi bi-pencil-square"></i></button></td>
                     </tr>`;
-                
             }
-           
         }
+
         function deletar(nome) {
             var DadosPessoa = JSON.parse(localStorage.getItem('Pessoas')) || [];
-            var index = DadosPessoa.findIndex(p => p.nome === nome);
-            if (index !== -1) {
-                DadosPessoa.splice(index, 1);
+            DadosPessoa = DadosPessoa.filter(d => d.nome !== nome);
+            localStorage.setItem('Pessoas', JSON.stringify(DadosPessoa));
+            listar();
+        }
+
+        function alterar(nome) {
+            var DadosPessoa = JSON.parse(localStorage.getItem('Pessoas')) || [];
+            pessoaAtual = DadosPessoa.find(d => d.nome === nome);
+            if (pessoaAtual) {
+                document.getElementById('nome').value = pessoaAtual.nome;
+                document.getElementById('email').value = pessoaAtual.email;
+                document.getElementById('telefone').value = pessoaAtual.telefone;
+                document.getElementById('cep').value = pessoaAtual.cep;
+                document.getElementById('rua').innerHTML = pessoaAtual.rua;
+                document.getElementById('bairro').innerHTML = pessoaAtual.bairro;
+                document.getElementById('cidade').innerHTML = pessoaAtual.cidade;
+                document.getElementById('estado').innerHTML = pessoaAtual.estado;
+                document.getElementById('alterar').style.display = 'block';
+            }
+        }
+
+        function loadLogradouro() {
+            const cep = document.getElementById('cep').value;
+
+            fetch(`https://viacep.com.br/ws/${cep}/json/`)
+                .then(response => response.json())
+                .then(dados => {
+                    if (dados.erro) {
+                        alert('Seu CEP não existe');
+                        condicao = false;
+                    } else {
+                        preencher(dados);
+                    }
+                })
+                .catch(error => {
+                    console.error('Erro:', error);
+                });
+        }
+
+        function preencher(dados) {
+            document.getElementById('rua').innerHTML = dados.logradouro;
+            document.getElementById('bairro').innerHTML = dados.bairro;
+            document.getElementById('cidade').innerHTML = dados.localidade;
+            document.getElementById('estado').innerHTML = dados.estado;
+        }
+
+        function Salvar() {
+            let nome = document.getElementById('nome').value;
+            let email = document.getElementById('email').value;
+            let telefone = document.getElementById('telefone').value;
+            let cep = document.getElementById('cep').value;
+            if (condicao) {
+                var DadosPessoa = JSON.parse(localStorage.getItem('Pessoas')) || [];
+                var objetoPessoa = {
+                    nome: nome,
+                    email: email,
+                    telefone: telefone,
+                    cep: cep,
+                    rua: document.getElementById('rua').innerHTML,
+                    bairro: document.getElementById('bairro').innerHTML,
+                    cidade: document.getElementById('cidade').innerHTML,
+                    estado: document.getElementById('estado').innerHTML
+                };
+                if (pessoaAtual) {
+                    DadosPessoa = DadosPessoa.map(d => d.nome === pessoaAtual.nome ? objetoPessoa : d);
+                } else {
+                    DadosPessoa.push(objetoPessoa);
+                }
                 localStorage.setItem('Pessoas', JSON.stringify(DadosPessoa));
+                alert('Cadastro realizado com sucesso');
+                document.getElementById('alterar').style.display = 'none';
                 listar();
             }
         }
 
-        window.onload = listar; 
+        window.onload = listar;
     </script>
 </body>
+
 </html>

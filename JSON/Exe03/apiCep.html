@@ -92,7 +92,6 @@
                 let pessoas = JSON.parse(localStorage.getItem('Pessoas')) || [];
                 pessoas.push(objetoPessoa);
                 localStorage.setItem('Pessoas', JSON.stringify(pessoas));
-
                 alert(`Olá ${objetoPessoa.nome}, o email ${objetoPessoa.email} e o telefone ${objetoPessoa.telefone} foram cadastrados com sucesso!`);
                 Limpar();
             }
